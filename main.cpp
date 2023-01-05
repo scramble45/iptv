@@ -13,11 +13,9 @@
 
 namespace fs = std::experimental::filesystem;
 
-// Constants for pagination menu
 const int ITEMS_PER_PAGE = 25;
 
 int main(int argc, char * argv[]) {
-  // Check if a directory was specified as a command line argument
   if (argc < 2) {
     std::cout << "Usage: " << argv[0] << " directory" << std::endl;
     return 1;
@@ -33,7 +31,7 @@ int main(int argc, char * argv[]) {
   // Iterate through all .m3u files
   for (const auto & file: fs::directory_iterator(directory)) {
     if (file.path().extension() == ".m3u") {
-      // Open the file
+      // Open a file
       std::ifstream stream(file.path().string());
       std::string line;
       while (std::getline(stream, line)) {
@@ -69,8 +67,9 @@ int main(int argc, char * argv[]) {
   int num_pages = (channels.size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
 
   nodelay(stdscr, TRUE);
-
+  
   std::string channel_number_str;
+
   while (true) {
     werase(menu_win);
     mvwprintw(menu_win, 0, 0, "Channels: ");
